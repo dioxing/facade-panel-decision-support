@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: Inter, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: #eef3f8;
+  --color-foreground: #122033;
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f172a;
+  --color-primary: #1d4ed8;
+  --color-primary-foreground: #eff6ff;
+  --color-secondary: #dbe7f4;
+  --color-secondary-foreground: #122033;
+  --color-muted: #e8eef6;
+  --color-muted-foreground: #526076;
+  --color-accent: #cfe2ff;
+  --color-accent-foreground: #173164;
+  --color-border: #d6deea;
+  --color-input: #d6deea;
+  --color-ring: #3b82f6;
+  --color-success: #1f8a56;
+  --color-success-foreground: #f1fcf6;
+  --color-warning: #c27803;
+  --color-warning-foreground: #fff7e8;
+  --color-danger: #c54135;
+  --color-danger-foreground: #fff3f2;
+  --color-surface: #f8fbff;
+
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    @apply min-h-screen bg-background font-sans text-foreground antialiased;
+    background-image:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 32%),
+      radial-gradient(circle at 85% 20%, rgba(13, 148, 136, 0.12), transparent 22%),
+      linear-gradient(180deg, #f7fbff 0%, #eef3f8 100%);
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .panel-surface {
+    @apply rounded-[1.65rem] border border-white/80 bg-white/88 shadow-[0_20px_55px_rgba(15,23,42,0.08)] backdrop-blur-md;
+  }
+
+  .metric-glow {
+    @apply bg-linear-to-br from-white to-slate-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)];
+  }
+
+  .section-title {
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-slate-500;
+  }
+}
