@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: Inter, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
@@ -44,12 +45,24 @@
     color-scheme: light;
   }
 
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
     @apply min-h-screen bg-background font-sans text-foreground antialiased;
     background-image:
       radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 32%),
       radial-gradient(circle at 85% 20%, rgba(13, 148, 136, 0.12), transparent 22%),
       linear-gradient(180deg, #f7fbff 0%, #eef3f8 100%);
+  }
+
+  html.dark body {
+    @apply bg-slate-950 text-slate-100;
+    background-image:
+      radial-gradient(circle at top left, rgba(37, 99, 235, 0.2), transparent 30%),
+      radial-gradient(circle at 85% 20%, rgba(20, 184, 166, 0.12), transparent 26%),
+      linear-gradient(180deg, #020617 0%, #0f172a 100%);
   }
 
   #root {
