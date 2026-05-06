@@ -7,6 +7,7 @@ This React + TypeScript application demonstrates how facade design teams can com
 ## Live Demo
 
 GitHub Pages deployment is configured through `.github/workflows/deploy-pages.yml`.
+The workflow builds the Vite app and publishes the static output to the `gh-pages` branch.
 
 Expected public URL:
 
@@ -14,7 +15,7 @@ Expected public URL:
 https://dioxing.github.io/facade-panel-decision-support/
 ```
 
-If the link is not active yet, open the repository on GitHub, go to `Settings > Pages`, set the source to `GitHub Actions`, then rerun the `Deploy to GitHub Pages` workflow from the `Actions` tab.
+If the link is not active yet, open the repository on GitHub, go to `Settings > Pages`, set the source to `Deploy from a branch`, choose `gh-pages` and `/root`, then save.
 
 ## Research Framing
 
