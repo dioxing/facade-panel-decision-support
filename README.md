@@ -4,6 +4,18 @@ An early-stage facade strategy selection prototype for evidence-led, feasibility
 
 This React + TypeScript application demonstrates how facade design teams can compare external wall system strategies before detailed design, while keeping data provenance, data quality, resource feasibility, and counterfactual diagnostics visible throughout the decision process.
 
+## Live Demo
+
+GitHub Pages deployment is configured through `.github/workflows/deploy-pages.yml`.
+
+Expected public URL:
+
+```text
+https://dioxing.github.io/facade-panel-decision-support/
+```
+
+If the link is not active yet, open the repository on GitHub, go to `Settings > Pages`, set the source to `GitHub Actions`, then rerun the `Deploy to GitHub Pages` workflow from the `Actions` tab.
+
 ## Research Framing
 
 Conventional early-stage facade comparison often starts with cost, embodied carbon, or visual preference, then checks constructability later. This can make non-buildable options appear optimal until site logistics, lifting limits, delivery capacity, laydown area, evidence gaps, or regulatory constraints are considered.
