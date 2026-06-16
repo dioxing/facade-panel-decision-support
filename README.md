@@ -68,15 +68,15 @@ The validation claim is that preliminary facade data can be transformed into tra
 
 The app is a static browser-only Vite application.
 
-- `src/research/mockData.ts` stores local mock project, factor, option, context, and validation data.
-- `src/research/calculations.ts` calculates F1/F2/F3, L1 overall status, L3 robustness, and M0/M1/M3 selections.
-- `src/components/research/PreliminaryShortlistingApp.tsx` renders the two-phase research interface.
-- `src/research/types.ts` defines the active research data model.
+- `src/mock/preliminaryFrameworkData.ts` stores local mock project, factor, option, context, and validation data.
+- `src/lib/preliminaryFrameworkCalculations.ts` calculates F1/F2/F3, L1 overall status, L3 robustness, and M0/M1/M3 selections.
+- `src/components/research/PreliminaryFacadeApp.tsx` renders the two-phase research interface.
+- `src/types/researchFramework.ts` defines the active research data model.
 
-Legacy and experimental files from earlier iterations may remain in the local workspace, but the deployed app entry point is:
+The deployed app entry point is:
 
 ```text
-src/App.tsx -> src/components/research/PreliminaryShortlistingApp.tsx
+src/App.tsx -> src/components/research/PreliminaryFacadeApp.tsx
 ```
 
 No backend or database is required.
