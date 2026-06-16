@@ -1,20 +1,14 @@
-export type PhaseId = "phase-1" | "phase-2";
-
 export type ResearchStepId =
-  | "research-setup"
-  | "factor-indicator-matrix"
-  | "nz-context-mapping"
-  | "expert-review-pack"
-  | "mvp-data-setup"
+  | "project-data"
+  | "facade-options"
   | "l1-feasibility"
   | "l2-comparison"
   | "l3-robustness"
-  | "validation"
-  | "solution-cards";
+  | "decision-models"
+  | "shortlist-report";
 
 export interface WorkflowStep {
   id: ResearchStepId;
-  phase: PhaseId;
   number: number;
   label: string;
   shortLabel: string;
@@ -73,6 +67,7 @@ export interface ProjectDataset {
   floorHeight: number;
   wwr: number;
   thermalTarget: string;
+  procurementRoute: string;
   siteAccess: "restricted" | "typical" | "flexible";
   laydown: "low" | "medium" | "high";
   craneAccess: "constrained" | "typical" | "favourable";
