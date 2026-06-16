@@ -1,193 +1,105 @@
-# EG-Facade Decision Support
+# Preliminary Facade Shortlisting Decision Support
 
-An early-stage facade strategy selection prototype for evidence-led, feasibility-first design workshops.
+A research-grade web demonstrator for preliminary facade system shortlisting in New Zealand.
 
-This React + TypeScript application demonstrates how facade design teams can compare external wall system strategies before detailed design, while keeping data provenance, data quality, resource feasibility, and counterfactual diagnostics visible throughout the decision process.
-
-## Live Demo
-
-GitHub Pages deployment is configured through `.github/workflows/deploy-pages.yml`.
-The workflow builds the Vite app and publishes the static output to the `gh-pages` branch.
-
-Expected public URL:
+Live demo:
 
 ```text
 https://dioxing.github.io/facade-panel-decision-support/
 ```
 
-If the link is not active yet, open the repository on GitHub, go to `Settings > Pages`, set the source to `Deploy from a branch`, choose `gh-pages` and `/root`, then save.
+## Research Purpose
 
-## Research Framing
+This prototype supports an independent PhD research framework. It links constructability factors, NZ preliminary design evidence, supply-side cost, upfront embodied carbon, preliminary constructability burden, scenario stress testing, and M0/M1/M3 validation.
 
-Conventional early-stage facade comparison often starts with cost, embodied carbon, or visual preference, then checks constructability later. This can make non-buildable options appear optimal until site logistics, lifting limits, delivery capacity, laydown area, evidence gaps, or regulatory constraints are considered.
+It is not a commercial facade design tool. It does not verify NZ Building Code compliance, select a universally optimal facade, predict final construction cost, or predict final installation productivity.
 
-EG-Facade reverses that order. It treats feasibility and evidence quality as first-class decision artefacts.
+## Phase 1: Framework Development
 
-The prototype is built around three commitments:
+Phase 1 defines the research framework before operational testing.
 
-- RAG-extracted evidence: system parameters are populated from mock project documents and then accepted, edited, or rejected by workshop participants.
-- DQI always visible: each parameter displays a three-part Data Quality Indicator for representativeness, reliability, and completeness.
-- Counterfactual diagnostics: shortlisted systems show what would need to change for a conditional or infeasible option to become feasible or preferred.
+- Research Setup explains the logic of preliminary facade shortlisting.
+- Factor-Indicator Matrix maps constructability factors CF1-CF8 to indicators, metrics, framework roles, data availability, source type, and expert validation status.
+- NZ Context Mapping connects preliminary design scope, compliance evidence, NZBC-relevant evidence gates, embodied carbon boundaries, and site logistics to L1/L2/L3 roles.
+- Expert Review Pack provides interview validation prompts for factor relevance, indicator suitability, data availability, role classification, solution-card clarity, and missing factors.
 
-## Workflow
+## Phase 2: Operationalisation and Validation
 
-The interface follows a five-stage workshop storyboard.
+Phase 2 demonstrates how the framework can be run with a minimum viable dataset.
 
-1. Setup
-   Define project context, procurement route, and facade zones. The default zones are podium, tower-low, and tower-high.
+- MVP Data Setup lists project-level inputs, option-level inputs, reference data, and completeness indicators.
+- L1 Feasibility screens compliance-evidence status and preliminary context readiness.
+- L2 Comparison reports F1 supply-side facade cost, F2 A1-A5 embodied carbon, and F3 preliminary constructability burden.
+- L3 Robustness stress-tests logistics, supplier, evidence, and carbon-boundary uncertainty.
+- M0/M1/M3 Validation compares baseline decision models with the proposed full framework.
+- Solution Cards present preliminary shortlist outputs, risk chips, diagnostics, evidence requests, and decision recommendations.
 
-2. Evidence
-   Review extracted values from mock EPDs, datasheets, site surveys, specifications, and precedent cost documents. Human verification creates an audit trail.
+## Framework Logic
 
-3. Candidates
-   Inspect five facade typologies, evidence coverage, DQI, missing values, and first-pass feasibility.
+L1 is separated from F1/F2/F3. It screens whether evidence is pass, conditional pass, hold, or reject. This is an evidence-readiness screen, not a compliance verification result.
 
-4. Gates
-   Calibrate hard regulatory gates and probabilistic resource gates such as crane hours, laydown area, delivery slots, transport limits, and lift limits.
-
-5. Decide & Audit
-   Explore counterfactual cards, Pareto trade-offs, solution cards, baseline comparison, and the audit trail.
-
-## Mock Candidate Systems
-
-The prototype includes exactly five systems:
-
-- S1 Unitised CW (Vendor A)
-- S2 Rainscreen ACM (Vendor B)
-- S3 Precast GRC Panel
-- S4 Spandrel + Window Wall
-- S5 Prefab Brick Veneer
-
-The mock evidence intentionally includes decision risk:
-
-- S2 is missing three parameters.
-- S5 has two low-DQI values.
-- Resource gates create feasible, conditional, and infeasible cells across zones.
-
-## Default Zones
-
-| Zone | Height | Crane | Laydown | Delivery |
-| --- | ---: | ---: | ---: | ---: |
-| Podium | 0-18 m | 4 hr/day | 80 m2 | 4 slots/day |
-| Tower low | 18-80 m | 6 hr/day | 120 m2 | 6 slots/day |
-| Tower high | 80-160 m | 8 hr/day | 100 m2 | 5 slots/day |
-
-## Decision Logic
-
-The app runs entirely in the browser with mock data.
-
-- `src/mock/extractedValues.ts` defines RAG-style extracted parameters with source snippets and DQI.
-- `src/mock/computeDecision.ts` builds candidates, zone feasibility cells, solutions, Pareto flags, knee solution, and counterfactuals.
-- `src/lib/probabilisticGate.ts` calculates probability of passing uncertain gates using a normal CDF and an error-function approximation.
-- `src/lib/counterfactual.ts` generates "if this gate changes by 20%" diagnostics.
-- `src/lib/auditTrail.ts` records verification, edits, rejection, shortlisting, and gate tuning.
-
-## Technology Stack
-
-- React
-- TypeScript
-- Vite
-- Zustand
-- Tailwind CSS
-- shadcn-style Radix UI primitives
-- Recharts
-- lucide-react
-
-No backend, database, localStorage, or sessionStorage is required.
-
-## Project Structure
+L2 compares three objectives:
 
 ```text
-src/
-  components/
-    shell/
-    shared/
-    stage1-setup/
-    stage2-evidence/
-    stage3-candidates/
-    stage4-gates/
-    stage5-decide/
-    ui/
-  lib/
-    auditTrail.ts
-    counterfactual.ts
-    dqi.ts
-    probabilisticGate.ts
-  mock/
-    candidateSystems.ts
-    computeDecision.ts
-    documents.ts
-    extractedValues.ts
-    gates.ts
-    solutions.ts
-  store/
-    candidateStore.ts
-    decisionStore.ts
-    evidenceStore.ts
-    gateStore.ts
-    projectStore.ts
-    useComputedDecision.ts
-  types/
-    domain.ts
+F1 = supply-side facade cost or cost index
+F2 = carbonA1A3 + carbonA4 + carbonA5
+F3 = (D1 + D2 + D3) / 3
 ```
 
-Legacy files from the earlier facade panel optimisation prototype are retained in `src/models`, `src/stores`, and older component folders, but the current app entry point uses the EG-Facade workshop shell.
+D1 represents standardisation and offsite-readiness burden. D2 represents interface, assembly, tolerance, and wet-work burden. D3 represents handling, access, and detailing burden. F3 uses a 0-1 scale where lower is better.
 
-## Screenshots
+L3 is scenario stress testing and decision explanation. It is not a fourth optimisation objective.
 
-Screenshots can be added after running the app locally.
+## Validation Models
+
+M0 selects options using minimum supply-side cost.
+
+M1 selects options using normalised cost and A1-A5 carbon:
 
 ```text
-docs/screenshots/01-setup.png
-docs/screenshots/02-evidence.png
-docs/screenshots/03-candidates.png
-docs/screenshots/04-gates.png
-docs/screenshots/05-decide-counterfactuals.png
-docs/screenshots/06-pareto-explorer.png
+M1_score = 0.5 * norm(F1) + 0.5 * norm(F2)
 ```
 
-## Getting Started
+M3 applies L1 evidence screening, compares F1/F2/F3, flags L3-sensitive options, and generates decision-support solution cards.
 
-Install dependencies:
+The validation claim is that preliminary facade data can be transformed into traceable, explainable, scenario-tested, and expert-reviewable decision outputs. It is not validated by proving that one facade system is universally optimal.
+
+## Implementation
+
+The app is a static browser-only Vite application.
+
+- `src/research/mockData.ts` stores local mock project, factor, option, context, and validation data.
+- `src/research/calculations.ts` calculates F1/F2/F3, L1 overall status, L3 robustness, and M0/M1/M3 selections.
+- `src/components/research/PreliminaryShortlistingApp.tsx` renders the two-phase research interface.
+- `src/research/types.ts` defines the active research data model.
+
+Legacy and experimental files from earlier iterations may remain in the local workspace, but the deployed app entry point is:
+
+```text
+src/App.tsx -> src/components/research/PreliminaryShortlistingApp.tsx
+```
+
+No backend or database is required.
+
+## Run Locally
 
 ```bash
 npm install
-```
-
-Run the development server:
-
-```bash
 npm run dev
 ```
 
-Build for production:
+Build:
 
 ```bash
 npm run build
 ```
 
-Preview the production build:
+## Deploy
 
-```bash
-npm run preview
+GitHub Actions builds the Vite app and publishes the static output to the `gh-pages` branch.
+
+If the public link is not active, check GitHub:
+
+```text
+Settings > Pages > Deploy from a branch > gh-pages > /root
 ```
-
-## Prototype Limitations
-
-This is a research prototype, not a validated optimisation engine.
-
-- RAG extraction is simulated using mock document data.
-- Probabilistic gates use simplified assumptions.
-- Cost, carbon, programme, and constructability formulas are illustrative.
-- Counterfactuals are generated from binding resource gates rather than a full mathematical optimiser.
-- Audit export is mocked for demonstration.
-
-## Research Contribution
-
-The prototype demonstrates an interface pattern for feasibility-first facade decision support. Its contribution is not a final algorithm, but a transparent workflow where early design teams can see:
-
-- which evidence supports each parameter,
-- whether that evidence is high or low quality,
-- which resource gates restrict feasible options,
-- how cost-carbon trade-offs change once feasibility is considered,
-- and what practical relaxation would change a decision.

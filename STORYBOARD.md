@@ -1,103 +1,58 @@
-# EG-Facade Workshop Storyboard
+# Preliminary Facade Shortlisting Storyboard
 
-This storyboard maps the research prompt to the implemented five-stage interface.
+## Phase 1: Framework Development
 
-## Stage 1: Setup
+### Step 1: Research Setup
 
-Purpose: establish the decision context before candidate evaluation.
+Shows the research logic and scope statement. Defines F1, F2, F3, L1, and L3 in plain language. Includes a two-phase workflow diagram.
 
-Implemented views:
+### Step 2: Factor-Indicator Matrix
 
-- Project context card with project name, location, procurement route, and regulatory frame.
-- Zone editor for podium, tower-low, and tower-high.
-- Resource sliders for crane allocation, laydown buffer, delivery bookings, and installation window.
-- Live feasibility matrix remains visible in the right sidebar.
+Shows the constructability factor, indicator, and metric table. CF1-CF6 feed F3, CF7 feeds L3 scenario stress testing, and CF8 feeds L1 evidence screening.
 
-Screenshot placeholder:
+### Step 3: NZ Context Mapping
 
-```text
-docs/screenshots/01-setup.png
-```
+Maps preliminary design scope, compliance evidence, facade-relevant NZBC evidence areas, embodied carbon boundaries, and logistics context to L1/L2/L3/F1/F2/F3/diagnostic treatment.
 
-## Stage 2: Evidence
+### Step 4: Expert Review Pack
 
-Purpose: show that system parameters come from extracted evidence plus human verification.
+Shows what experts validate and provides suggested interview questions. Export is represented as a prototype-only button.
 
-Implemented views:
+## Phase 2: Operationalisation and Validation
 
-- Document tray with mock EPDs, datasheets, site survey, regulation extract, specification, and BOQ evidence.
-- System selector for S1-S5.
-- Extraction viewer with source snippets, DQI, status, accept/edit/reject controls, and manual override reason.
-- Parameter sheet showing values and DQI across all systems.
+### Step 5: MVP Data Setup
 
-Screenshot placeholder:
+Shows project-level input, option-level input, reference data cards, and data completeness indicators.
 
-```text
-docs/screenshots/02-evidence.png
-```
+### Step 6: L1 Feasibility
 
-## Stage 3: Candidates
+Shows the evidence/context matrix for product assurance, E2, fire, H1, B1/seismic movement, B2, transport hard feasibility, and data confidence. Displays evidence requests in a side panel.
 
-Purpose: screen facade system families before deciding.
+### Step 7: L2 Comparison
 
-Implemented views:
+Defines and displays F1 supply-side cost, F2 A1-A5 carbon, and F3 preliminary constructability burden. Includes values table, normalised bars, D1/D2/D3 profiles, and cost-carbon scatter plot.
 
-- Five candidate cards.
-- Evidence coverage score.
-- DQI badges for available parameters.
-- Warning messages for low-DQI or low-coverage systems.
-- Worst-zone feasibility pill for each system.
-- Shortlist toggle with audit entry.
+### Step 8: L3 Robustness
 
-Screenshot placeholder:
+Shows scenario stress testing controls for laydown, delivery access, crane access, supplier lead time, supplier substitution risk, and carbon boundary. Reports robust, moderately sensitive, or fragile status.
 
-```text
-docs/screenshots/03-candidates.png
-```
+### Step 9: M0/M1/M3 Validation
 
-## Stage 4: Gates
+Compares cost-only, cost-carbon, and proposed full-framework decision outputs. Shows shortlist overlap, rank changes, L1-held options, L3-flagged options, and the validation claim.
 
-Purpose: make hard constraints and uncertain resource capacity explicit.
+### Step 10: Solution Cards
 
-Implemented views:
+Shows final preliminary shortlist cards with option identity, system type, material, insulation, panel size, connection concept, L1 status, F1/F2/F3, D1/D2/D3 profile, L3 sensitivity, diagnostics, evidence requests, and recommendation.
 
-- Read-only hard gate panel for fire, thermal, acoustic, and structural requirements.
-- Resource gate sliders for global transport and lift limits.
-- Zone-specific resource gates for crane hours, laydown area, delivery slots, and install windows.
-- One-sigma uncertainty band below each slider.
-- Live feasibility matrix updates as gates are tuned.
+## Wording Boundary
 
-Screenshot placeholder:
+The demonstrator uses research terms:
 
-```text
-docs/screenshots/04-gates.png
-```
+- data confidence
+- scenario stress testing
+- L1 feasibility and context
+- L2 cost-carbon-constructability comparison
+- L3 robustness and decision explanation
+- M0/M1/M3 validation
 
-## Stage 5: Decide & Audit
-
-Purpose: interpret feasible, conditional, and infeasible options through decision artefacts.
-
-Implemented views:
-
-- Counterfactual Cards tab is the default.
-- Apply scenario button jumps back to Stage 4 and highlights the binding gate.
-- Pareto Explorer scatter plot compares cost and embodied carbon with constructability as point size.
-- Solution Cards list assignments, cost, carbon, constructability score, p-min, Pareto status, and binding gates.
-- Audit Trail records evidence verification, edits, rejections, shortlisting, and gate tuning.
-- Mock export notice simulates a decision package export.
-
-Screenshot placeholders:
-
-```text
-docs/screenshots/05-decide-counterfactuals.png
-docs/screenshots/06-pareto-explorer.png
-```
-
-## Non-negotiable Prompt Commitments
-
-- RAG-extracted evidence is represented by `DocumentSource` and `ExtractedValue` records.
-- Human verification actions are captured in `AuditEntry`.
-- DQI is shown as a three-segment badge for representativeness, reliability, and completeness.
-- Counterfactual diagnostics are a first-class default decision view.
-- Feasibility is probabilistic and zone-specific.
-- No backend or browser storage persistence is used.
+The demonstrator does not claim to verify NZ Building Code compliance, select an optimal facade, predict final construction cost, or predict final installation productivity.

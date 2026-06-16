@@ -1,5 +1,5 @@
-import { WorkshopShell } from "@/components/shell/WorkshopShell";
+import { PreliminaryFacadeApp } from "@/components/research/PreliminaryFacadeApp";
 
 export default function App() {
-  return <WorkshopShell />;
+  return <PreliminaryFacadeApp />;
 }
