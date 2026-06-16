@@ -3,16 +3,10 @@ import {
   ArrowRightLeft,
   BarChart3,
   Boxes,
-  ClipboardList,
   Database,
-  FileCheck2,
   FileStack,
   Gauge,
-  MapPinned,
-  ShieldAlert,
   ShieldCheck,
-  Sparkles,
-  Target,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -316,19 +310,50 @@ function MetricCard({
   helper: string;
 }) {
   return (
-    <div className="metric-glow rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-slate-950 dark:text-slate-50">{value}</p>
+    <div className="metric-glow min-w-0 rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-950">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{label}</p>
+      <p className="mt-2 break-words text-xl font-semibold leading-tight text-slate-950 dark:text-slate-50">
+        {value}
+      </p>
       <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{helper}</p>
+    </div>
+  );
+}
+
+function MetricRows({
+  items,
+}: {
+  items: Array<{
+    label: string;
+    value: string;
+    helper: string;
+  }>;
+}) {
+  return (
+    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
+      {items.map((item) => (
+        <div
+          className="flex min-w-0 items-start justify-between gap-4 border-b border-slate-100 p-3 last:border-b-0 dark:border-slate-800"
+          key={item.label}
+        >
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{item.label}</p>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{item.helper}</p>
+          </div>
+          <p className="max-w-[55%] shrink-0 break-words text-right text-lg font-semibold leading-tight text-slate-950 dark:text-slate-50">
+            {item.value}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
 
 function KeyValue({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</p>
-      <p className="mt-2 text-sm font-semibold text-slate-950 dark:text-slate-50">{value}</p>
+    <div className="min-w-0 rounded-lg border border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{label}</p>
+      <p className="mt-2 break-words text-sm font-semibold text-slate-950 dark:text-slate-50">{value}</p>
     </div>
   );
 }
@@ -378,7 +403,7 @@ function WorkflowNavigation({
           Seven-step preliminary shortlist workflow
         </CardTitle>
       </CardHeader>
-      <CardContent className="grid gap-3 md:grid-cols-2 xl:grid-cols-7">
+      <CardContent className="grid gap-3 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-7">
         {workflowSteps.map((step) => {
           const Icon = stepIcons[step.id];
           const isActive = step.id === activeStep;
@@ -432,7 +457,7 @@ function ProjectDataScreen({ scores }: { scores: OptionScores[] }) {
   const conditionalCount = scores.filter((score) => score.l1Overall === "conditional pass").length;
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1.14fr_0.86fr]">
+    <div className="grid gap-4 2xl:grid-cols-[1.14fr_0.86fr]">
       <Card className="panel-surface">
         <CardHeader>
           <p className="section-title">Project data</p>
@@ -510,7 +535,7 @@ function ProjectDataScreen({ scores }: { scores: OptionScores[] }) {
             <p className="section-title">Current baseline</p>
             <CardTitle>What the loaded dataset currently shows</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-3 sm:grid-cols-3">
+          <CardContent className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(150px,1fr))]">
             <MetricCard
               helper="NZD-priced options only"
               label="Average F1"
@@ -545,7 +570,7 @@ function FacadeOptionsScreen({
   const selectedScore = scores.find((score) => score.option.id === selectedOptionId) ?? scores[0];
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
+    <div className="grid gap-4 2xl:grid-cols-[1.12fr_0.88fr]">
       <Card className="panel-surface">
         <CardHeader>
           <p className="section-title">Facade options</p>
@@ -592,7 +617,7 @@ function FacadeOptionsScreen({
                   <Badge variant={statusTone(score.l1Overall)}>{score.l1Overall}</Badge>
                   <Badge variant={decisionVariant[score.m3Decision]}>{titleCase(score.m3Decision)}</Badge>
                 </div>
-                <div className="mt-4 grid grid-cols-3 gap-3 text-sm">
+                <div className="mt-4 grid gap-3 text-sm [grid-template-columns:repeat(auto-fit,minmax(84px,1fr))]">
                   <div>
                     <p className="text-xs uppercase tracking-[0.14em] text-slate-500">F1</p>
                     <p className="mt-1 font-semibold text-slate-900 dark:text-slate-100">{formatF1(score)}</p>
@@ -652,7 +677,7 @@ function FacadeOptionsScreen({
             <KeyValue label="Supplier source" value={titleCase(selectedScore.option.supplierSource)} />
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(150px,1fr))]">
             <MetricCard helper="Supply-side facade cost" label="F1" value={formatF1(selectedScore)} />
             <MetricCard helper="A1-A5 upfront carbon" label="F2" value={formatF2(selectedScore)} />
             <MetricCard helper="Preliminary constructability burden" label="F3" value={formatF3(selectedScore)} />
@@ -719,7 +744,7 @@ function L1FeasibilityScreen({
   };
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+    <div className="grid gap-4 2xl:grid-cols-[1.2fr_0.8fr]">
       <Card className="panel-surface">
         <CardHeader>
           <p className="section-title">L1 feasibility</p>
@@ -787,11 +812,15 @@ function L1FeasibilityScreen({
             <p className="section-title">L1 summary</p>
             <CardTitle>Status distribution</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-3 sm:grid-cols-2">
-            <MetricCard helper="No unresolved L1 issues" label="Pass" value={`${summary.pass}`} />
-            <MetricCard helper="Interpret with evidence requests" label="Conditional" value={`${summary.conditional}`} />
-            <MetricCard helper="Missing evidence blocks interpretation" label="Hold" value={`${summary.hold}`} />
-            <MetricCard helper="Not suitable for shortlist" label="Reject" value={`${summary.reject}`} />
+          <CardContent>
+            <MetricRows
+              items={[
+                { helper: "No unresolved L1 issues", label: "Pass", value: `${summary.pass}` },
+                { helper: "Interpret with evidence requests", label: "Conditional", value: `${summary.conditional}` },
+                { helper: "Missing evidence blocks interpretation", label: "Hold", value: `${summary.hold}` },
+                { helper: "Not suitable for shortlist", label: "Reject", value: `${summary.reject}` },
+              ]}
+            />
           </CardContent>
         </Card>
 
@@ -840,7 +869,7 @@ function L2ComparisonScreen({
   }));
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1.18fr_0.82fr]">
+    <div className="grid gap-4 2xl:grid-cols-[1.18fr_0.82fr]">
       <div className="grid gap-4">
         <Card className="panel-surface">
           <CardHeader>
@@ -849,7 +878,7 @@ function L2ComparisonScreen({
               Cost, carbon, and constructability side by side
             </CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-3 md:grid-cols-3">
+          <CardContent className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
             <MetricCard
               helper="F1 = (Cmaterial + Cfabrication + Cconnection + Ctransport + Callowance) / Afacade"
               label="F1 supply-side facade cost"
@@ -1024,11 +1053,13 @@ function L2ComparisonScreen({
             <CardTitle>{selectedScore.option.name}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-3 sm:grid-cols-3">
-              <MetricCard helper="Current cost expression" label="F1" value={formatF1(selectedScore)} />
-              <MetricCard helper="A1-A5 total" label="F2" value={formatF2(selectedScore)} />
-              <MetricCard helper="Lower is better" label="F3" value={formatF3(selectedScore)} />
-            </div>
+            <MetricRows
+              items={[
+                { helper: "Current cost expression", label: "F1", value: formatF1(selectedScore) },
+                { helper: "A1-A5 total", label: "F2", value: formatF2(selectedScore) },
+                { helper: "Lower is better", label: "F3", value: formatF3(selectedScore) },
+              ]}
+            />
             <div className="space-y-3">
               <BurdenBar label="D1 standardisation / offsite readiness" value={selectedScore.d1} />
               <BurdenBar label="D2 interface / assembly / tolerance" value={selectedScore.d2} />
@@ -1140,7 +1171,7 @@ function L3RobustnessScreen({
   const fragileCount = scores.filter((score) => stressResults[score.option.id].status === "fragile").length;
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[0.92fr_1.08fr]">
+    <div className="grid gap-4 2xl:grid-cols-[0.92fr_1.08fr]">
       <div className="grid gap-4">
         <Card className="panel-surface">
           <CardHeader>
@@ -1238,7 +1269,7 @@ function L3RobustnessScreen({
             <CardTitle>Selected option: {selectedScore.option.name}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(160px,1fr))]">
               <MetricCard helper="Current scenario result" label="L3 status" value={titleCase(selectedStress.status)} />
               <MetricCard helper="Baseline from the mock dataset" label="Stored robustness" value={titleCase(selectedScore.robustness)} />
               <MetricCard helper="Higher points mean more exposure" label="Stress points" value={`${selectedStress.points}`} />
@@ -1269,7 +1300,7 @@ function L3RobustnessScreen({
           <CardTitle>Robustness under the active scenario</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(160px,1fr))]">
             <MetricCard helper="Still stable under current stress" label="Robust" value={`${robustCount}`} />
             <MetricCard helper="Needs explanation or caution" label="Moderate" value={`${moderateCount}`} />
             <MetricCard helper="Shortlist confidence is weak" label="Fragile" value={`${fragileCount}`} />
@@ -1351,7 +1382,7 @@ function DecisionModelsScreen({
             universally optimal.
           </p>
         </CardHeader>
-        <CardContent className="grid gap-4 xl:grid-cols-3">
+        <CardContent className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
           {validationModels.map((model) => (
             <div
               className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950"
@@ -1387,7 +1418,7 @@ function DecisionModelsScreen({
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+      <div className="grid gap-4 2xl:grid-cols-[1.05fr_0.95fr]">
         <Card className="panel-surface">
           <CardHeader>
             <p className="section-title">Comparison outputs</p>
@@ -1526,7 +1557,7 @@ function ShortlistReportScreen({
             and evidence requests into a discussion-ready shortlist.
           </p>
         </CardHeader>
-        <CardContent className="grid gap-4 xl:grid-cols-3">
+        <CardContent className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
           {shortlist.map((score) => {
             const result = stressResults[score.option.id];
             const isSelected = score.option.id === selectedOptionId;
@@ -1557,7 +1588,7 @@ function ShortlistReportScreen({
                   </Badge>
                 </div>
 
-                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <div className="mt-4 grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(125px,1fr))]">
                   <MetricCard helper="Cost or index" label="F1" value={formatF1(score)} />
                   <MetricCard helper="A1-A5" label="F2" value={formatF2(score)} />
                   <MetricCard helper="Lower is better" label="F3" value={formatF3(score)} />
@@ -1667,7 +1698,7 @@ function SummaryRail({
     .filter((score): score is OptionScores => Boolean(score));
 
   return (
-    <div className="space-y-4 xl:sticky xl:top-6">
+    <div className="space-y-4 2xl:sticky 2xl:top-6">
       <Card className="panel-surface">
         <CardHeader>
           <p className="section-title">Selected option</p>
@@ -1681,11 +1712,13 @@ function SummaryRail({
             <Badge variant={statusTone(selectedScore.l1Overall)}>{selectedScore.l1Overall}</Badge>
             <Badge variant={robustnessVariant[selectedStress.status]}>{selectedStress.status}</Badge>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
-            <MetricCard helper="Supply-side cost" label="F1" value={formatF1(selectedScore)} />
-            <MetricCard helper="A1-A5 carbon" label="F2" value={formatF2(selectedScore)} />
-            <MetricCard helper="Constructability burden" label="F3" value={formatF3(selectedScore)} />
-          </div>
+          <MetricRows
+            items={[
+              { helper: "Supply-side cost", label: "F1", value: formatF1(selectedScore) },
+              { helper: "A1-A5 carbon", label: "F2", value: formatF2(selectedScore) },
+              { helper: "Constructability burden", label: "F3", value: formatF3(selectedScore) },
+            ]}
+          />
           <div className="flex flex-wrap gap-2">
             {selectedScore.option.riskChips.slice(0, 4).map((chip) => (
               <Badge key={chip} variant={riskVariant(chip)}>
@@ -1856,7 +1889,7 @@ export function PreliminaryFacadeApp() {
     <div className="mx-auto max-w-[1680px] px-5 py-6 sm:px-6 lg:px-8">
       <div className="space-y-6">
         <Card className="panel-surface overflow-hidden border-white/70 bg-linear-to-br from-slate-950 via-slate-900 to-blue-900 text-white">
-          <div className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+          <div className="grid gap-6 2xl:grid-cols-[1.08fr_0.92fr]">
             <div className="p-6 sm:p-8">
               <div className="flex flex-wrap gap-2">
                 <Badge className="border-white/15 bg-white/10 text-white" variant="outline">
@@ -1931,7 +1964,7 @@ export function PreliminaryFacadeApp() {
 
         <WorkflowNavigation activeStep={activeStep} onSelectStep={setActiveStep} />
 
-        <div className="grid gap-6 xl:grid-cols-[1.22fr_0.78fr]">
+        <div className="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_380px]">
           <div className="space-y-4">
             {renderActiveScreen({
               activeStep,
